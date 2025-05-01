@@ -83,7 +83,7 @@ const Navbar = () => {
               </li>
               <li>
                 <Link
-                  to="#"
+                  to="/sales"
                   className="block py-2 px-3 text-white md:hover:text-blue-700"
                 >
                   Vendas
