@@ -20,7 +20,7 @@ const Navbar = () => {
             className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
             id="navbar"
           >
-            <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium md:space-x-8 md:flex-row md:mt-0 ">
+            <ul className="flex flex-col items-center p-4 md:p-0 mt-4 font-medium md:space-x-8 md:flex-row md:mt-0 ">
               <li>
                 <Link
                   to="/"
@@ -34,7 +34,7 @@ const Navbar = () => {
                   onClick={toggleDropdown}
                   id="dropdownNavbarLink"
                   data-dropdown-toggle="dropdownNavbar"
-                  className="flex items-center justify-between w-full text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
+                  className="flex items-center justify-between w-full md:hover:text-blue-700 dark:text-white"
                 >
                   Cadastrar
                   <svg
@@ -80,23 +80,6 @@ const Navbar = () => {
                     </li>
                   </ul>
                 </div>
-              </li>
-              <li>
-                <Link
-                  to="/register-products"
-                  className="block py-2 px-3 text-white md:hover:text-blue-700"
-                  aria-current="page"
-                >
-                  Cadastro de produtos
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/categories"
-                  className="block py-2 px-3 text-white md:hover:text-blue-700"
-                >
-                  Categorias
-                </Link>
               </li>
               <li>
                 <Link
