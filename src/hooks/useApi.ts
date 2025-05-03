@@ -1,3 +1,4 @@
+import { IProduts } from "../interfaces/IProducts";
 import api from "../services/service";
 
 export const useApi = () => ({
@@ -33,5 +34,23 @@ export const useApi = () => ({
       name,
     });
     return response.data;
+  },
+
+  registerProducts: async ({
+    name,
+    description,
+    price,
+    category_id,
+    brand,
+  }: IProduts) => {
+    const response = await api.post("/products/", {
+      name,
+      description,
+      price,
+      category_id,
+      brand,
+    });
+
+    return response;
   },
 });
