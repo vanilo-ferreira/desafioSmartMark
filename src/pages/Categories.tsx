@@ -101,11 +101,14 @@ const Categories = () => {
                 Cadastrar
               </button>
             </form>
-            <Alert
-              isOpen={open}
-              setOpen={setOpen}
-              alertType={alertSuccess}
-            />
+
+            {alertSuccess ? (
+              <Alert
+                isOpen={open}
+                setOpen={setOpen}
+                alertType={alertSuccess}
+              />
+            ) : null}
           </div>
         </div>
       </div>
