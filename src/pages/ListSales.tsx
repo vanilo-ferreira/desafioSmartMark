@@ -1,6 +1,50 @@
+import { useEffect, useState } from 'react';
 import Navbar from "../components/NavBar";
 
+import { useApi } from "../hooks/useApi";
+
 const ListSales = () => {
+
+    const api = useApi();
+    const [sales, setSales] = useState([]);
+    const [products, setProducts] = useState([]);
+
+    const listSales = async () => {
+        try {
+            const response = await api.listSales();
+            setSales(response);
+
+        } catch (error) {
+            console.error('Erro ao buscar os dados:', error);
+        }
+    };
+
+    const getProducts = async () => {
+        try {
+            const response = await api.listProducts();
+            setProducts(response);
+
+        } catch (error) {
+            console.error('Erro ao buscar os dados:', error);
+        }
+    };
+
+    const getProductName = (id: number) => {
+        const product = products.find((prod) => prod.id === id);
+        return product ? product.name : "Produto desconhecida";
+    };
+
+    const formatDate = (isoDate) => {
+        const [year, month, day] = isoDate.split("-");
+        return `${day}-${month}-${year}`;
+    };
+
+
+    useEffect(() => {
+        getProducts();
+        listSales();
+    }, []);
+
     return (
         <div>
             <Navbar />
@@ -20,77 +64,22 @@ const ListSales = () => {
                         </tr>
                     </thead>
                     <tbody>
-
-                        <tr>
-                            <td className="px-4 py-2 border text-center">1</td>
-                            <td className="px-4 py-2 border text-center">1</td>
-                            <td className="px-4 py-2 border text-center">12</td>
-                            <td className="px-4 py-2 border text-center">15599.88</td>
-                            <td className="px-4 py-2 border text-center">2025-01-15</td>
-                        </tr>
-                        <tr>
-                            <td className="px-4 py-2 border text-center">2</td>
-                            <td className="px-4 py-2 border text-center">1</td>
-                            <td className="px-4 py-2 border text-center">8</td>
-                            <td className="px-4 py-2 border text-center">10399.92</td>
-                            <td className="px-4 py-2 border text-center">2025-03-22</td>
-                        </tr>
-                        <tr>
-                            <td className="px-4 py-2 border text-center">3</td>
-                            <td className="px-4 py-2 border text-center">1</td>
-                            <td className="px-4 py-2 border text-center">15</td>
-                            <td className="px-4 py-2 border text-center">19499.85</td>
-                            <td className="px-4 py-2 border text-center">2025-07-05</td>
-                        </tr>
-                        <tr>
-                            <td className="px-4 py-2 border text-center">4</td>
-                            <td className="px-4 py-2 border text-center">1</td>
-                            <td className="px-4 py-2 border text-center">10</td>
-                            <td className="px-4 py-2 border text-center">12999.9</td>
-                            <td className="px-4 py-2 border text-center">2025-10-18</td>
-                        </tr>
-                        <tr>
-                            <td className="px-4 py-2 border text-center">5</td>
-                            <td className="px-4 py-2 border text-center">2</td>
-                            <td className="px-4 py-2 border text-center">6</td>
-                            <td className="px-4 py-2 border text-center">8999.94</td>
-                            <td className="px-4 py-2 border text-center">2025-02-12</td>
-                        </tr>
-                        <tr>
-                            <td className="px-4 py-2 border text-center">6</td>
-                            <td className="px-4 py-2 border text-center">2</td>
-                            <td className="px-4 py-2 border text-center">11</td>
-                            <td className="px-4 py-2 border text-center">16499.89</td>
-                            <td className="px-4 py-2 border text-center">2025-05-30</td>
-                        </tr>
-                        <tr>
-                            <td className="px-4 py-2 border text-center">7</td>
-                            <td className="px-4 py-2 border text-center">2</td>
-                            <td className="px-4 py-2 border text-center">9</td>
-                            <td className="px-4 py-2 border text-center">13499.91</td>
-                            <td className="px-4 py-2 border text-center">2025-09-14</td>
-                        </tr>
-                        <tr>
-                            <td className="px-4 py-2 border text-center">8</td>
-                            <td className="px-4 py-2 border text-center">2</td>
-                            <td className="px-4 py-2 border text-center">7</td>
-                            <td className="px-4 py-2 border text-center">10499.93</td>
-                            <td className="px-4 py-2 border text-center">2025-12-01</td>
-                        </tr>
-                        <tr>
-                            <td className="px-4 py-2 border text-center">9</td>
-                            <td className="px-4 py-2 border text-center">3</td>
-                            <td className="px-4 py-2 border text-center">5</td>
-                            <td className="px-4 py-2 border text-center">9499.95</td>
-                            <td className="px-4 py-2 border text-center">2025-01-28</td>
-                        </tr>
-                        <tr>
-                            <td className="px-4 py-2 border text-center">9</td>
-                            <td className="px-4 py-2 border text-center">3</td>
-                            <td className="px-4 py-2 border text-center">8</td>
-                            <td className="px-4 py-2 border text-center">15199.92</td>
-                            <td className="px-4 py-2 border text-center">2025-04-10</td>
-                        </tr>
+                        {sales?.slice()
+                            .sort((a, b) => new Date(a.date) - new Date(b.date))
+                            .map((sale, index) => (
+                                <tr key={sale.id}>
+                                    <td className="px-4 py-2 border text-center">{index + 1}</td>
+                                    <td className="px-4 py-2 border text-center">{getProductName(sale.product_id)}</td>
+                                    <td className="px-4 py-2 border text-center">{sale.quantity}</td>
+                                    <td className="px-4 py-2 border">{
+                                        Number(sale.total_price).toLocaleString("pt-BR", {
+                                            style: "currency",
+                                            currency: "BRL",
+                                        })}
+                                    </td>
+                                    <td className="px-4 py-2 border text-center">{formatDate(sale.date)}</td>
+                                </tr>
+                            ))}
                     </tbody>
                 </table>
             </div>
