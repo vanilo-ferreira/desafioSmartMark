@@ -98,7 +98,7 @@ const ListProducts = () => {
                         isOpen={open}
                         setOpen={() => setOpen(false)}
                         name={selectedProduct.name}
-                        product_id={selectedProduct.product_id}
+                        product_id={selectedProduct.id}
                         price={selectedProduct.price}
                     />
                 )}
