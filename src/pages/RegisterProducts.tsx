@@ -68,13 +68,7 @@ const RegisterProducts = () => {
 
                 <h1 className="text-gray-500 font-bold text-2xl mb-7"> Cadastrar Produtos</h1>
 
-                <Alert
-                    isOpen={open}
-                    setOpen={setOpen}
-                    alertType={alertSuccess}
-                />
-
-                <div className="w-full max-w-sm bg-white border border-gray-200 p-8 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                <div className="w-full max-w-sm mb-8 bg-white border border-gray-200 p-8 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                     <form
                         onSubmit={handleSubmit}
                         className=" flex flex-col justify-center  max-w-md mx-auto"
@@ -139,6 +133,12 @@ const RegisterProducts = () => {
                         </button>
                     </form>
                 </div>
+
+                <Alert
+                    isOpen={open}
+                    setOpen={setOpen}
+                    alertType={alertSuccess}
+                />
             </div>
         </div >
     );

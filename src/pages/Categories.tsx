@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import Navbar from "../components/NavBar";
+import Alert from '../components/Alert';
 import { useApi } from "../hooks/useApi";
 
 const Categories = () => {
@@ -8,6 +9,8 @@ const Categories = () => {
   const api = useApi();
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
+  const [alertSuccess, setAlertSuccess] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   const searchCategories = async () => {
     try {
@@ -29,10 +32,16 @@ const Categories = () => {
     try {
       const response = await api.registerCategory({ name });
 
+      if (response.status === 200) {
+        setOpen(!open);
+        setAlertSuccess(!alertSuccess);
+      }
+
       searchCategories();
 
       setName("");
     } catch (error) {
+      setOpen(!open);
       console.error("Erro ao cadastrar categoria:", error);
     }
   };
@@ -64,7 +73,7 @@ const Categories = () => {
           </table>
 
           <div className="w-100 h-50 bg-white border border-gray-200 p-8 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-            <form className="flex flex-col justify-center" onSubmit={handleSubmit}>
+            <form className="flex flex-col justify-center mb-20" onSubmit={handleSubmit}>
               <h2 className="text-center text-white font-bold">Adicionar Categoria</h2>
               <div className="relative z-0 w-full mb-5 group">
                 <input
@@ -92,6 +101,11 @@ const Categories = () => {
                 Cadastrar
               </button>
             </form>
+            <Alert
+              isOpen={open}
+              setOpen={setOpen}
+              alertType={alertSuccess}
+            />
           </div>
         </div>
       </div>

@@ -33,7 +33,7 @@ export const useApi = () => ({
     const response = await api.post("/categories/", {
       name,
     });
-    return response.data;
+    return response;
   },
 
   registerProducts: async ({
