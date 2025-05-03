@@ -9,4 +9,13 @@ export const useApi = () => ({
       console.error("Erro ao buscar os dados:", error);
     }
   },
+
+  searchCategories: async () => {
+    try {
+      const response = await api.get("/categories/");
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao buscar os dados:", error);
+    }
+  },
 });

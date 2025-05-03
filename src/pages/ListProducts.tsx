@@ -7,6 +7,7 @@ const ListProducts = () => {
 
     const api = useApi();
     const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
 
     const fetchData = async () => {
         try {
@@ -18,8 +19,24 @@ const ListProducts = () => {
         }
     };
 
+    const searchCategories = async () => {
+        try {
+            const response = await api.searchCategories();
+            setCategories(response);
+
+        } catch (error) {
+            console.error('Erro ao buscar os dados:', error);
+        }
+    };
+
+    const getCategoryName = (id: number) => {
+        const category = categories.find((cat) => cat.id === id);
+        return category ? category.name : "Categoria desconhecida";
+    };
+
     useEffect(() => {
         fetchData();
+        searchCategories();
     }, []);
 
     return (
@@ -52,7 +69,7 @@ const ListProducts = () => {
                                     <td className="px-4 py-2 border">{product.name}</td>
                                     <td className="px-4 py-2 border">{product.description}</td>
                                     <td className="px-4 py-2 border">{product.price}</td>
-                                    <td className="px-4 py-2 border text-center">{product.category_id}</td>
+                                    <td className="px-4 py-2 border text-center">{getCategoryName(product.category_id)}</td>
                                     <td className="px-4 py-2 border">{product.brand}</td>
                                     <td className="px-4 py-2 border text-center">Vender</td>
                                     <td className="px-4 py-2 border">Editar</td>
