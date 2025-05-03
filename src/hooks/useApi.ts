@@ -27,4 +27,11 @@ export const useApi = () => ({
       console.error("Erro ao buscar os dados:", error);
     }
   },
+
+  registerCategory: async ({ name }: { name: string }) => {
+    const response = await api.post("/categories/", {
+      name,
+    });
+    return response.data;
+  },
 });

@@ -1,6 +1,42 @@
+import { useEffect, useState } from 'react';
+
 import Navbar from "../components/NavBar";
+import { useApi } from "../hooks/useApi";
 
 const Categories = () => {
+
+  const api = useApi();
+  const [categories, setCategories] = useState([]);
+  const [name, setName] = useState("");
+
+  const searchCategories = async () => {
+    try {
+      const response = await api.searchCategories();
+      setCategories(response);
+
+    } catch (error) {
+      console.error('Erro ao buscar os dados:', error);
+    }
+  };
+
+  useEffect(() => {
+    searchCategories();
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await api.registerCategory({ name });
+
+      searchCategories();
+
+      setName("");
+    } catch (error) {
+      console.error("Erro ao cadastrar categoria:", error);
+    }
+  };
+
   return (
     <div>
       <Navbar />
@@ -16,37 +52,27 @@ const Categories = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className="px-4 py-2 border text-center">1</td>
-                <td className="px-4 py-2 border">TVs</td>
-              </tr>
-              <tr>
-                <td className="px-4 py-2 border text-center">2</td>
-                <td className="px-4 py-2 border">Refrigerators</td>
-              </tr>
-              <tr>
-                <td className="px-4 py-2 border text-center">3</td>
-                <td className="px-4 py-2 border">Laptops</td>
-              </tr>
-              <tr>
-                <td className="px-4 py-2 border text-center">4</td>
-                <td className="px-4 py-2 border">Microwaber</td>
-              </tr>
-              <tr>
-                <td className="px-4 py-2 border text-center">5</td>
-                <td className="px-4 py-2 border">Smartphones</td>
-              </tr>
+              {categories?.slice()
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map((category, index) => (
+                  <tr key={category.id}>
+                    <td className="px-4 py-2 border text-center">{index + 1}</td>
+                    <td className="px-4 py-2 border">{category.name}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
 
           <div className="w-100 h-50 bg-white border border-gray-200 p-8 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-            <form className="flex flex-col justify-center">
-                <h2 className="text-center text-white font-bold">Adicionar Categoria</h2>
+            <form className="flex flex-col justify-center" onSubmit={handleSubmit}>
+              <h2 className="text-center text-white font-bold">Adicionar Categoria</h2>
               <div className="relative z-0 w-full mb-5 group">
                 <input
                   type="text"
                   name="floating_first_name"
                   id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
                   required
