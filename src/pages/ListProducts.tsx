@@ -2,12 +2,16 @@ import { useEffect, useState } from 'react';
 import Navbar from "../components/NavBar";
 
 import { useApi } from "../hooks/useApi";
+import { IModal } from '../interfaces/IModal';
+import Modal from '../components/Modal';
 
 const ListProducts = () => {
 
     const api = useApi();
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [selectedProduct, setSelectedProduct] = useState<IModal | null>(null);
+    const [open, setOpen] = useState<boolean>(false);
 
     const fetchData = async () => {
         try {
@@ -39,15 +43,20 @@ const ListProducts = () => {
         searchCategories();
     }, []);
 
+    const handleOpenModal = (product: IModal) => {
+        setSelectedProduct(product);
+        setOpen(true);
+    };
+
     return (
         <div>
             <Navbar />
 
-            <div className="h-screen w-full mt-20 mb-20 flex flex-col justify-star items-center">
+            <div className="h-full w-full mt-25 mb-20 flex flex-col justify-star items-center">
 
                 <h1 className="text-gray-500 font-bold text-2xl mb-7"> Produtos</h1>
 
-                <table className="table-auto mb-20">
+                <table className="table-auto">
                     <thead>
                         <tr>
                             <th className="px-4 py-2 border"></th>
@@ -71,12 +80,28 @@ const ListProducts = () => {
                                     <td className="px-4 py-2 border">{product.price}</td>
                                     <td className="px-4 py-2 border text-center">{getCategoryName(product.category_id)}</td>
                                     <td className="px-4 py-2 border">{product.brand}</td>
-                                    <td className="px-4 py-2 border text-center">Vender</td>
+                                    <td className="px-4 py-2 border text-center">
+                                        <button
+                                            onClick={() => handleOpenModal(product)}
+                                            className="flex justify-center items-center text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                            Vender
+                                        </button>
+                                    </td>
                                     <td className="px-4 py-2 border">Editar</td>
                                 </tr>
                             ))}
                     </tbody>
                 </table>
+
+                {selectedProduct && open && (
+                    <Modal
+                        isOpen={open}
+                        setOpen={() => setOpen(false)}
+                        name={selectedProduct.name}
+                        product_id={selectedProduct.product_id}
+                        price={selectedProduct.price}
+                    />
+                )}
             </div>
         </div>
     );
