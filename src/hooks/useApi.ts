@@ -18,4 +18,13 @@ export const useApi = () => ({
       console.error("Erro ao buscar os dados:", error);
     }
   },
+
+  listSales: async () => {
+    try {
+      const response = await api.get("/sales/");
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao buscar os dados:", error);
+    }
+  },
 });
