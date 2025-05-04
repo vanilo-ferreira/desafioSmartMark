@@ -65,4 +65,12 @@ export const useApi = () => ({
 
     return response;
   },
+
+  updatePrice: async (product_id: number, newPrice: number) => {
+    const response = await api.patch(`/products/${product_id}`, {
+      price: newPrice,
+    });
+
+    return response;
+  },
 });
