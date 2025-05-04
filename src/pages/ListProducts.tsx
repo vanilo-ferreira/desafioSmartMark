@@ -4,6 +4,8 @@ import Navbar from "../components/NavBar";
 import { useApi } from "../hooks/useApi";
 import { IModal } from '../interfaces/IModal';
 import Modal from '../components/Modal';
+import { IModalPrice } from '../interfaces/IModalPrice';
+import ModalPrice from '../components/ModalPrice';
 
 const ListProducts = () => {
 
@@ -11,7 +13,9 @@ const ListProducts = () => {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState<IModal | null>(null);
+    const [selectedPriceProduct, setSelectedPriceProduct] = useState<IModalPrice | null>(null);
     const [open, setOpen] = useState<boolean>(false);
+    const [openPrice, setOpenPrice] = useState<boolean>(false);
 
     const fetchData = async () => {
         try {
@@ -46,6 +50,11 @@ const ListProducts = () => {
     const handleOpenModal = (product: IModal) => {
         setSelectedProduct(product);
         setOpen(true);
+    };
+
+    const handleOpenModalPrice = (product: { id: number; name: string; price: number }) => {
+        setSelectedPriceProduct(product);
+        setOpenPrice(true);
     };
 
     return (
@@ -83,11 +92,17 @@ const ListProducts = () => {
                                     <td className="px-4 py-2 border text-center">
                                         <button
                                             onClick={() => handleOpenModal(product)}
-                                            className="flex justify-center items-center text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                            className="flex justify-center items-center text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700">
                                             Vender
                                         </button>
                                     </td>
-                                    <td className="px-4 py-2 border">Editar</td>
+                                    <td className="px-4 py-2 border">
+                                        <button
+                                            onClick={() => handleOpenModalPrice(product)}
+                                            className="flex justify-center items-center text-white inline-flex items-center focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700">
+                                            Editar Preço
+                                        </button>
+                                    </td>
                                 </tr>
                             ))}
                     </tbody>
@@ -100,6 +115,17 @@ const ListProducts = () => {
                         name={selectedProduct.name}
                         product_id={selectedProduct.id}
                         price={selectedProduct.price}
+                    />
+                )}
+
+                {selectedPriceProduct && openPrice && (
+                    <ModalPrice
+                        isOpenPrice={openPrice}
+                        setOpenPrice={() => setOpenPrice(false)}
+                        name={selectedPriceProduct.name}
+                        product_id={selectedPriceProduct.id}
+                        price={selectedPriceProduct.price}
+                        fetchData={fetchData}
                     />
                 )}
             </div>
