@@ -4,12 +4,14 @@ import Navbar from "../components/NavBar";
 import { useApi } from "../hooks/useApi";
 
 import { Chart } from "react-google-charts";
+import { ISales } from '../interfaces/ISales';
+import { IProduts } from '../interfaces/IProducts';
 
 const SalesData = () => {
 
     const api = useApi();
 
-    const [chartData, setChartData] = useState([]);
+    const [chartData, setChartData] = useState<(string | number)[][]>([]);
 
     const fetchSalesAndProducts = async () => {
         try {
@@ -18,9 +20,9 @@ const SalesData = () => {
                 api.listProducts()
             ]);
 
-            const summary = {};
+            const summary: { [key: number]: number } = {};
 
-            sales.forEach((sale) => {
+            sales.forEach((sale: ISales) => {
                 const id = sale.product_id;
                 summary[id] = (summary[id] || 0) + sale.quantity;
             });
@@ -28,7 +30,7 @@ const SalesData = () => {
             const data = [
                 ["Produtos vendidos no último ano", "Quantidade Vendida"],
                 ...Object.entries(summary).map(([productId, quantity]) => {
-                    const product = products.find(p => p.id === parseInt(productId));
+                    const product = products.find((p: IProduts) => p.id === parseInt(productId));
                     return [product ? product.name : "Desconhecido", quantity];
                 })
             ];
