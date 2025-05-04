@@ -8,6 +8,13 @@ const Navbar = () => {
     }
   };
 
+  const toggleGraphicDropdownMenu = () => {
+    const dropdown = document.getElementById("dropGraphicdownNavbar");
+    if (dropdown) {
+      dropdown.classList.toggle("hidden");
+    }
+  };
+
   return (
     <nav className=" bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -89,13 +96,57 @@ const Navbar = () => {
                   Vendas
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="#"
-                  className="block py-2 px-3 text-white md:hover:text-blue-700"
+              <li className="relative inline-block">
+                <button
+                  onClick={toggleGraphicDropdownMenu}
+                  id="dropdownNavbarLink"
+                  data-dropdown-toggle="dropGraphicdownNavbar"
+                  className="flex items-center justify-between w-full md:hover:text-blue-700 dark:text-white"
                 >
-                  Gráficos
-                </Link>
+                  Análise dos Dados
+                  <svg
+                    className="w-2.5 h-2.5 ms-2.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 10 6"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m1 1 4 4 4-4"
+                    />
+                  </svg>
+                </button>
+
+                <div
+                  id="dropGraphicdownNavbar"
+                  className="absolute right-0 mt-2 z-50 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-lg w-44 dark:bg-gray-700 dark:divide-gray-600"
+                >
+                  <ul
+                    className="py-2 text-sm text-gray-700 dark:text-gray-400"
+                    aria-labelledby="dropdownLargeButton"
+                  >
+                    <li>
+                      <Link
+                        to="/sales-quantity"
+                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        Quantidade de vendas
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/profit-analysis"
+                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        Análise de Lucro
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
               </li>
             </ul>
           </div>
