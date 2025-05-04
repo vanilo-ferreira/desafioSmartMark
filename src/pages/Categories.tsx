@@ -3,11 +3,12 @@ import { useEffect, useState } from 'react';
 import Navbar from "../components/NavBar";
 import Alert from '../components/Alert';
 import { useApi } from "../hooks/useApi";
+import { ICategory } from '../interfaces/ICategories';
 
 const Categories = () => {
 
   const api = useApi();
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<ICategory[]>([]);
   const [name, setName] = useState("");
   const [alertSuccess, setAlertSuccess] = useState(false);
   const [open, setOpen] = useState<boolean>(false);
@@ -26,7 +27,7 @@ const Categories = () => {
     searchCategories();
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {

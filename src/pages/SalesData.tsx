@@ -48,7 +48,7 @@ const SalesData = () => {
             <Navbar />
 
             <div className="w-full mt-30 mb-20 flex flex-col items-center">
-                <h1 className="text-gray-500 font-bold text-2xl mb-7">Produtos Vendidos no Último Ano</h1>
+                <h1 className="text-gray-500 font-bold text-2xl mb-7">Produtos vendidos no último ano</h1>
                 <div className="w-full flex justify-center items-center">
 
                     <Chart

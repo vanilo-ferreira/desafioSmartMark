@@ -20,7 +20,7 @@ const ModalPrice = ({ isOpenPrice, setOpenPrice, name, product_id, price, fetchD
         }).format(number);
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         try {

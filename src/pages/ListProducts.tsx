@@ -6,12 +6,14 @@ import { IModal } from '../interfaces/IModal';
 import Modal from '../components/Modal';
 import { IModalPrice } from '../interfaces/IModalPrice';
 import ModalPrice from '../components/ModalPrice';
+import { ICategory } from '../interfaces/ICategories';
+import { IProduts } from '../interfaces/IProducts';
 
 const ListProducts = () => {
 
     const api = useApi();
-    const [products, setProducts] = useState([]);
-    const [categories, setCategories] = useState([]);
+    const [products, setProducts] = useState<IProduts[]>([]);
+    const [categories, setCategories] = useState<ICategory[]>([]);
     const [selectedProduct, setSelectedProduct] = useState<IModal | null>(null);
     const [selectedPriceProduct, setSelectedPriceProduct] = useState<IModalPrice | null>(null);
     const [open, setOpen] = useState<boolean>(false);
@@ -48,13 +50,27 @@ const ListProducts = () => {
         searchCategories();
     }, []);
 
-    const handleOpenModal = (product: IModal) => {
-        setSelectedProduct(product);
+    const handleOpenModal = (product: IProduts) => {
+        const modalData: IModal = {
+            name: product.name,
+            price: product.price,
+            product_id: product.id,
+            isOpen: true,
+            setOpen: setOpen,
+        };
+        setSelectedProduct(modalData);
         setOpen(true);
     };
 
     const handleOpenModalPrice = (product: { id: number; name: string; price: number }) => {
-        setSelectedPriceProduct(product);
+        setSelectedPriceProduct({
+            name: product.name,
+            product_id: product.id,
+            price: product.price,
+            isOpenPrice: true,
+            setOpenPrice: setOpenPrice,
+            fetchData: fetchData,
+        });
         setOpenPrice(true);
     };
 
@@ -118,14 +134,14 @@ const ListProducts = () => {
                                     <td className="px-4 py-2 border text-center">
                                         <button
                                             onClick={() => handleOpenModal(product)}
-                                            className="flex justify-center items-center text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700">
+                                            className="flex justify-center text-white items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700">
                                             Vender
                                         </button>
                                     </td>
                                     <td className="px-4 py-2 border">
                                         <button
                                             onClick={() => handleOpenModalPrice(product)}
-                                            className="flex justify-center items-center text-white inline-flex items-center focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700">
+                                            className="flex justify-center text-white items-center focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700">
                                             Editar Preço
                                         </button>
                                     </td>
@@ -139,7 +155,7 @@ const ListProducts = () => {
                         isOpen={open}
                         setOpen={() => setOpen(false)}
                         name={selectedProduct.name}
-                        product_id={selectedProduct.id}
+                        product_id={selectedProduct.product_id}
                         price={selectedProduct.price}
                     />
                 )}
@@ -149,7 +165,7 @@ const ListProducts = () => {
                         isOpenPrice={openPrice}
                         setOpenPrice={() => setOpenPrice(false)}
                         name={selectedPriceProduct.name}
-                        product_id={selectedPriceProduct.id}
+                        product_id={selectedPriceProduct.product_id}
                         price={selectedPriceProduct.price}
                         fetchData={fetchData}
                     />

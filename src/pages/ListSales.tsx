@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import Navbar from "../components/NavBar";
 
 import { useApi } from "../hooks/useApi";
+import { IProduts } from '../interfaces/IProducts';
+import { ISales } from '../interfaces/ISales';
 
 const ListSales = () => {
 
     const api = useApi();
-    const [sales, setSales] = useState([]);
-    const [products, setProducts] = useState([]);
+    const [sales, setSales] = useState<ISales[]>([]);
+    const [products, setProducts] = useState<IProduts[]>([]);
 
     const listSales = async () => {
         try {
@@ -34,7 +36,7 @@ const ListSales = () => {
         return product ? product.name : "Produto desconhecida";
     };
 
-    const formatDate = (isoDate) => {
+    const formatDate = (isoDate: string) => {
         const [year, month, day] = isoDate.split("-");
         return `${day}-${month}-${year}`;
     };
