@@ -4,6 +4,7 @@ import ListProducts from '../pages/ListProducts';
 import Categories from "../pages/Categories";
 import ListSales from '../pages/ListSales';
 import DataAnalysis from '../pages/SalesData';
+import ProfitData from '../pages/profitData';
 
 const AppRoutes = () => {
 
@@ -15,6 +16,7 @@ const AppRoutes = () => {
                 <Route path="/categories" element={<Categories />} />
                 <Route path="/sales" element={<ListSales />} />
                 <Route path="/sales-quantity" element={<DataAnalysis />} />
+                <Route path="/profit-analysis" element={<ProfitData />} />
             </Routes>
         </BrowserRouter >
     );
