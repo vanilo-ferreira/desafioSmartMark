@@ -7,12 +7,12 @@ import Modal from '../components/Modal';
 import { IModalPrice } from '../interfaces/IModalPrice';
 import ModalPrice from '../components/ModalPrice';
 import { ICategory } from '../interfaces/ICategories';
-import { IProduts } from '../interfaces/IProducts';
+import { IGetProducts } from '../interfaces/IGetProducts';
 
 const ListProducts = () => {
 
     const api = useApi();
-    const [products, setProducts] = useState<IProduts[]>([]);
+    const [products, setProducts] = useState<IGetProducts[]>([]);
     const [categories, setCategories] = useState<ICategory[]>([]);
     const [selectedProduct, setSelectedProduct] = useState<IModal | null>(null);
     const [selectedPriceProduct, setSelectedPriceProduct] = useState<IModalPrice | null>(null);
@@ -50,7 +50,7 @@ const ListProducts = () => {
         searchCategories();
     }, []);
 
-    const handleOpenModal = (product: IProduts) => {
+    const handleOpenModal = (product: IGetProducts) => {
         const modalData: IModal = {
             name: product.name,
             price: product.price,

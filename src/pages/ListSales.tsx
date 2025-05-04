@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import Navbar from "../components/NavBar";
 
 import { useApi } from "../hooks/useApi";
-import { IProduts } from '../interfaces/IProducts';
+import { IGetProducts } from '../interfaces/IGetProducts';
 import { ISales } from '../interfaces/ISales';
 
 const ListSales = () => {
 
     const api = useApi();
     const [sales, setSales] = useState<ISales[]>([]);
-    const [products, setProducts] = useState<IProduts[]>([]);
+    const [products, setProducts] = useState<IGetProducts[]>([]);
 
     const listSales = async () => {
         try {
@@ -72,7 +72,7 @@ const ListSales = () => {
                                 <tr key={index}>
                                     <td className="px-4 py-2 border text-center">{index + 1}</td>
                                     <td className="px-4 py-2 border text-center">{getProductName(sale.product_id)}</td>
-                                    <td className="px-4 py-2 border text-center">(sale.quantity)</td>
+                                    <td className="px-4 py-2 border text-center">{sale.quantity}</td>
                                     <td className="px-4 py-2 border">{
                                         Number(sale.total_price).toLocaleString("pt-BR", {
                                             style: "currency",
