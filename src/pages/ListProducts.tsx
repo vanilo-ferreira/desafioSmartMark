@@ -16,6 +16,7 @@ const ListProducts = () => {
     const [selectedPriceProduct, setSelectedPriceProduct] = useState<IModalPrice | null>(null);
     const [open, setOpen] = useState<boolean>(false);
     const [openPrice, setOpenPrice] = useState<boolean>(false);
+    const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
     const fetchData = async () => {
         try {
@@ -65,6 +66,25 @@ const ListProducts = () => {
 
                 <h1 className="text-gray-500 font-bold text-2xl mb-7"> Produtos</h1>
 
+                <div className="mb-6 flex justify-center items-center">
+                    <label htmlFor="categoryFilter" className="mb-2 mr-8 text-sm font-medium text-gray-700">
+                        Filtrar por categoria:
+                    </label>
+                    <select
+                        id="categoryFilter"
+                        value={selectedCategory ?? ""}
+                        onChange={(e) => setSelectedCategory(e.target.value ? Number(e.target.value) : null)}
+                        className="border border-gray-300 rounded p-2"
+                    >
+                        <option value="">Todas as categorias</option>
+                        {categories.map((category) => (
+                            <option key={category.id} value={category.id}>
+                                {category.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
                 <table className="table-auto">
                     <thead>
                         <tr>
@@ -79,14 +99,20 @@ const ListProducts = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {products?.slice()
+                        {products
+                            ?.filter((product) => !selectedCategory || product.category_id === selectedCategory)
                             .sort((a, b) => a.name.localeCompare(b.name))
                             .map((product, index) => (
                                 <tr key={product.id}>
                                     <td className="px-4 py-2 border text-center">{index + 1}</td>
                                     <td className="px-4 py-2 border">{product.name}</td>
                                     <td className="px-4 py-2 border">{product.description}</td>
-                                    <td className="px-4 py-2 border">{product.price}</td>
+                                    <td className="px-4 py-2 border"> {
+                                        Number(product.price).toLocaleString("pt-BR", {
+                                            style: "currency",
+                                            currency: "BRL",
+                                        })}
+                                    </td>
                                     <td className="px-4 py-2 border text-center">{getCategoryName(product.category_id)}</td>
                                     <td className="px-4 py-2 border">{product.brand}</td>
                                     <td className="px-4 py-2 border text-center">
