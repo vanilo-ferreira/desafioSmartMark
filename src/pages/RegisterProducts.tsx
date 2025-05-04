@@ -67,7 +67,7 @@ const RegisterProducts = () => {
 
             <div className="h-screen w-full flex flex-col justify-center items-center">
 
-                <h1 className="text-gray-500 font-bold text-2xl mb-7"> Cadastrar Produtos</h1>
+                <h1 className="text-gray-500 font-bold text-2xl mb-7">Cadastrar Produtos</h1>
 
                 <div className="w-full max-w-sm mb-8 bg-white border border-gray-200 p-8 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                     <form
