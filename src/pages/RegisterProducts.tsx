@@ -4,12 +4,13 @@ import Navbar from "../components/NavBar";
 import Alert from "../components/Alert";
 
 import { useApi } from "../hooks/useApi";
+import { ICategory } from '../interfaces/ICategories';
 
 const RegisterProducts = () => {
 
 
     const api = useApi();
-    const [categories, setCategories] = useState([]);
+    const [categories, setCategories] = useState<ICategory[]>([]);
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [brand, setBrand] = useState("");
@@ -32,7 +33,7 @@ const RegisterProducts = () => {
         searchCategories();
     }, []);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         try {
@@ -40,7 +41,7 @@ const RegisterProducts = () => {
                 name,
                 description,
                 price: parseFloat(price),
-                category_id: categoryId,
+                category_id: Number(categoryId),
                 brand,
             });
 

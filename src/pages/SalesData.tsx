@@ -5,7 +5,7 @@ import { useApi } from "../hooks/useApi";
 
 import { Chart } from "react-google-charts";
 import { ISales } from '../interfaces/ISales';
-import { IProduts } from '../interfaces/IProducts';
+import { IGetProducts } from '../interfaces/IGetProducts';
 
 const SalesData = () => {
 
@@ -30,7 +30,7 @@ const SalesData = () => {
             const data = [
                 ["Produtos vendidos no último ano", "Quantidade Vendida"],
                 ...Object.entries(summary).map(([productId, quantity]) => {
-                    const product = products.find((p: IProduts) => p.id === parseInt(productId));
+                    const product = products.find((p: IGetProducts) => p.id === parseInt(productId));
                     return [product ? product.name : "Desconhecido", quantity];
                 })
             ];

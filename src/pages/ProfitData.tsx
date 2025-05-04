@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import { useApi } from "../hooks/useApi";
 import Navbar from "../components/NavBar";
+import { ISales } from "../interfaces/ISales";
+import { IGetProducts } from "../interfaces/IGetProducts"
 
 const ProfitData = () => {
-    const [chartData, setChartData] = useState([]);
+    const [chartData, setChartData] = useState<(string | number)[][]>([]);
 
     const api = useApi();
 
@@ -14,8 +16,8 @@ const ProfitData = () => {
             const sales = await api.listSales();
             const products = await api.listProducts();
 
-            const productMap = {};
-            products.forEach(p => {
+            const productMap: { [key: number]: string } = {};
+            products.forEach((p: IGetProducts) => {
                 productMap[p.id] = p.name;
             });
 
@@ -34,32 +36,40 @@ const ProfitData = () => {
                 "Dezembro"
             ];
 
-            const salesByMonth = Array.from({ length: 12 }, (_, i) => ({
+            const salesByMonth: { month: string, products: { [name: string]: number } }[] = Array.from({ length: 12 }, (_, i) => ({
                 month: months[i],
                 products: {},
             }));
 
-            sales.forEach(sale => {
-                const month = new Date(sale.date).getMonth(); // 0-11
+            sales.forEach((sale: ISales) => {
+                const month = new Date(sale.date).getMonth();
                 const name = productMap[sale.product_id] || `Produto ${sale.product_id}`;
-                salesByMonth[month].products[name] = (salesByMonth[month].products[name] || 0) + sale.total_price;
+
+                if (!salesByMonth[month]) {
+                    salesByMonth[month] = { month: months[month], products: {} };
+                }
+
+                salesByMonth[month].products[name as string] = (salesByMonth[month].products[name as string] || 0) + sale.total_price;
             });
 
-            const allProductNames = [...new Set(sales.map(s => productMap[s.product_id]))];
+            const allProductNames = [...new Set(sales.map((s: ISales) => productMap[s.product_id]))];
 
             const data = [
                 ['Mês', ...allProductNames]
             ];
 
             salesByMonth.forEach(({ month, products }) => {
-                const row = [month];
-                allProductNames.forEach(name => {
-                    row.push(products[name] || 0);
+                const row: (string | number)[] = [month];
+                (allProductNames as string[]).forEach((name) => {
+
+                    const productName = String(name);
+                    row.push(products[productName] || 0);
                 });
                 data.push(row);
             });
 
-            setChartData(data);
+            setChartData(data as (string | number)[][]);
+
         };
 
         fetchChartData();

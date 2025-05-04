@@ -1,4 +1,4 @@
-import { IProduts } from "../interfaces/IProducts";
+import { IProducts } from "../interfaces/IProducts";
 import { ISales } from "../interfaces/ISales";
 import api from "../services/service";
 
@@ -43,7 +43,7 @@ export const useApi = () => ({
     price,
     category_id,
     brand,
-  }: IProduts) => {
+  }: IProducts) => {
     const response = await api.post("/products/", {
       name,
       description,
