@@ -1,6 +1,13 @@
+import { useState } from "react";
 import { IModal } from "../interfaces/IModal";
 
+import { useApi } from "../hooks/useApi";
+
 const Modal = ({ isOpen, setOpen, name, product_id, price }: IModal) => {
+
+    const api = useApi();
+    const [quantity, setQuantity] = useState("");
+    const [saleDate, setSaleDate] = useState("");
 
     function closeModal() {
         setOpen(false);
@@ -12,6 +19,29 @@ const Modal = ({ isOpen, setOpen, name, product_id, price }: IModal) => {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
         }).format(number);
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const totalPrice = parseFloat(quantity) * parseFloat(price);
+
+        try {
+            const response = await api.registerSale({
+                product_id: Number(product_id),
+                quantity: parseInt(quantity),
+                total_price: totalPrice,
+                date: saleDate
+            });
+
+            if (response.status === 200) {
+                setOpen(!open);
+            }
+
+        } catch (error) {
+            setOpen(!open);
+            console.error("Erro ao vender produto:", error);
+        }
     };
 
     if (isOpen) {
@@ -35,7 +65,7 @@ const Modal = ({ isOpen, setOpen, name, product_id, price }: IModal) => {
                                 Produto
                             </h3>
 
-                            <form className="p-4 md:p-5">
+                            <form className="p-4 md:p-5" onSubmit={handleSubmit}>
 
                                 <div className="flex mb-4">
                                     <div className="flex flex-col items-baseline">
@@ -52,13 +82,21 @@ const Modal = ({ isOpen, setOpen, name, product_id, price }: IModal) => {
                                         </label>
 
                                         <div className="flex justify-center items-center  col-span-2 sm:col-span-1">
-                                            <label htmlFor="quantity" className="block mb-2 text-sm mr-4 font-medium text-gray-900 dark:text-white">Quantidade:</label>
-                                            <input required type="number" name="quantity" id="quantity" className="w-30 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" />
+                                            <label htmlFor="quantity"
+                                                className="block mb-2 text-sm mr-4 font-medium text-gray-900 dark:text-white">Quantidade:</label>
+                                            <input required type="number"
+                                                value={quantity}
+                                                onChange={(e) => setQuantity(e.target.value)}
+                                                name="quantity"
+                                                id="quantity" className="w-30 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" />
                                         </div>
 
                                         <div className="flex justify-center items-center mt-4">
                                             <label htmlFor="date" className="block mb-2 text-sm mr-4 font-medium text-gray-900 dark:text-white">Data da Venda:</label>
-                                            <input required type="date" name="date" id="date" className="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" />
+                                            <input required type="date"
+                                                value={saleDate}
+                                                onChange={(e) => setSaleDate(e.target.value)}
+                                                name="date" id="date" className="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" />
                                         </div>
                                     </div>
 
