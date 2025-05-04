@@ -4,7 +4,7 @@ import ListProducts from '../pages/ListProducts';
 import Categories from "../pages/Categories";
 import ListSales from '../pages/ListSales';
 import DataAnalysis from '../pages/SalesData';
-import ProfitData from '../pages/profitData';
+import ProfitData from '../pages/ProfitData';
 
 const AppRoutes = () => {
 
