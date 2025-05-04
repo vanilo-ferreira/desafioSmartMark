@@ -67,12 +67,12 @@ const ListSales = () => {
                     </thead>
                     <tbody>
                         {sales?.slice()
-                            .sort((a, b) => new Date(a.date) - new Date(b.date))
+                            .sort((a, b) => new Date(a.date).valueOf() - new Date(b.date).valueOf())
                             .map((sale, index) => (
-                                <tr key={sale.id}>
+                                <tr key={index}>
                                     <td className="px-4 py-2 border text-center">{index + 1}</td>
                                     <td className="px-4 py-2 border text-center">{getProductName(sale.product_id)}</td>
-                                    <td className="px-4 py-2 border text-center">{sale.quantity}</td>
+                                    <td className="px-4 py-2 border text-center">(sale.quantity)</td>
                                     <td className="px-4 py-2 border">{
                                         Number(sale.total_price).toLocaleString("pt-BR", {
                                             style: "currency",
