@@ -1,54 +1,84 @@
-# React + TypeScript + Vite
+# Cardápio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Objetivo
 
-Currently, two official plugins are available:
+A SmartMart Solutions é uma empresa varejista digital em expansão que atua com múltiplos produtos e categorias em um ambiente altamente competitivo. O time de operações comerciais busca um sistema interno para cadastro, visualização e análise de produtos e vendas, com um painel visual simples e eficiente para auxiliar na tomada de decisões.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+O objetivo foi construir o primeiro protótipo funcional dessa aplicação, unindo a construção de APIs em Python e uma interface visual em React. O objetivo também é criar uma base sólida para visualização de dados de vendas e permitir a inserção de produtos manualmente ou via arquivos CSV, com filtros e edição.
 
-## Expanding the ESLint configuration
+Tecnologias utilizadas:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React.js – Para otimização e renderização eficiente.
+- React Hooks – Para gerenciamento de estado.
+- TailwindCSS – Para uma interface moderna e responsiva.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Funcionalidades Principais:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- Pordutos ("/") – Exibe a listagem de todos os produtos cadastrados, além de permitir a venda e a edição do preço dos mesmo, e filtrar os produtos por categoria;
+- Cadastrar - Produtos ("/register-products") – Permite o cadastro no banco de dados de um novo produto
+- Cadastrar - Categorias Categorias("/categories") – Exibe a listagem de todas as categorias cadastradas, além de permitir a inclusão de uma nova;
+- Vendas("/sales") - Exibe a listagem de todos os produtos vendidos;
+- Análise de Dados - Quantidade de Vendas – Exibe um gráfico de barras com a quantidade de vendas total para cada produto vendido;
+- Análise de Dados - Análise de Lucros – Exibe um gráfico de linhas com o somantórios de todas das vendas de cada produto, por mês, podendo verificar em qual mês um determinado produto deu mais lucro.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Conhecendo o projeto
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+O projeto que foi criado pode ser visto abaixo.
+
+<figure>
+  <img align="center" alt="Products" src="./doc/assets/products.png" />
+  <figcaption align="center">
+    <span style="font-weight:bold">Figura 1.
+    </span>
+  Listagem dos Produtos.</figcaption>
+</figure>
+
+<figure>
+  <img align="center" alt="Registro de Produtos" src="./doc/assets/registerProducts.png" />
+  <figcaption align="center">
+    <span style="font-weight:bold">Figura 2.
+    </span>
+  Cadastro de Produtos.</figcaption>
+</figure>
+
+<figure>
+  <img align="center" alt="Categorias" src="./doc/assets/categories.png" />
+  <figcaption align="center">
+    <span style="font-weight:bold">Figura 3.
+    </span>
+  Categorias.</figcaption>
+</figure>
+
+<figure>
+  <img align="center" alt="Listagem de Vendas" src="./doc/assets/sales.png" />
+  <figcaption align="center">
+    <span style="font-weight:bold">Figura 4.
+    </span>
+  Listagem de Vendas.</figcaption>
+</figure>
+
+<figure>
+  <img align="center" alt="Categoria Sobremesas" src="./doc/assets/salesData.png" />
+  <figcaption align="center">
+    <span style="font-weight:bold">Figura 5.
+    </span>
+  Gráfico de Barras com Quantidade de Vendas.</figcaption>
+</figure>
+
+<figure>
+  <img align="center" alt="Listagem de Vendas" src="./doc/assets/profitData.png" />
+  <figcaption align="center">
+    <span style="font-weight:bold">Figura 6.
+    </span>
+  Gráfico de Linhas com os Comparativo dos Lucros para Cada Produto.</figcaption>
+</figure>
+
+### `npm start`
+
+Para rodar o projeto no modo de desenvolvimento, execute o comando `npm dev`.
+Abra [http://localhost:3000](http://localhost:3000 para visualizá-lo em seu navegador.
+
+### `deploy`
+
+O deploy da aplicação foi realizado na plataforma [Vercel](https://vercel.com/).
+E poderá ser acompanhado através do seguinte link: [Cardápio](https://projeto-cardapio-iota.vercel.app/).
