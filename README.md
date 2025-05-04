@@ -1,4 +1,4 @@
-# Cardápio
+# SmartMart Solutions
 
 ## Objetivo
 
@@ -8,22 +8,25 @@ O objetivo foi construir o primeiro protótipo funcional dessa aplicação, unin
 
 Tecnologias utilizadas:
 
-- React.js – Para otimização e renderização eficiente.
-- React Hooks – Para gerenciamento de estado.
-- TailwindCSS – Para uma interface moderna e responsiva.
+- React.js: Para a construção da interface de usuário, com foco na renderização eficiente.
+- React Hooks: Para gerenciamento de estado e efeitos colaterais.
+- Vite: Para uma experiência de desenvolvimento mais rápida e otimizada, garantindo build quase instantâneo e recarga automática.
+- TailwindCSS: Para uma interface responsiva e moderna, com foco em personalização rápida.
+- Python (FastAPI): Para a criação das APIs que gerenciam a inserção e consulta dos dados.
+- PostgreSQL: Para o armazenamento persistente dos dados.
 
 Funcionalidades Principais:
 
-- Pordutos ("/") – Exibe a listagem de todos os produtos cadastrados, além de permitir a venda e a edição do preço dos mesmo, e filtrar os produtos por categoria;
-- Cadastrar - Produtos ("/register-products") – Permite o cadastro no banco de dados de um novo produto
-- Cadastrar - Categorias Categorias("/categories") – Exibe a listagem de todas as categorias cadastradas, além de permitir a inclusão de uma nova;
-- Vendas("/sales") - Exibe a listagem de todos os produtos vendidos;
-- Análise de Dados - Quantidade de Vendas – Exibe um gráfico de barras com a quantidade de vendas total para cada produto vendido;
-- Análise de Dados - Análise de Lucros – Exibe um gráfico de linhas com o somantórios de todas das vendas de cada produto, por mês, podendo verificar em qual mês um determinado produto deu mais lucro.
+- Produtos (`"/"`): Exibe a listagem de todos os produtos cadastrados e permite a venda e edição de preços, além de possibilitar o filtro por categoria.
+- Cadastro de Produtos (`"/register-products"`): Permite a inserção de novos produtos no banco de dados.
+- Cadastro de Categorias (`"/categories"`): Exibe todas as categorias cadastradas, com a funcionalidade de adicionar novas categorias.
+- Vendas (`"/sales"`): Exibe a lista de todos os produtos vendidos, com informações detalhadas sobre cada transação.
+- Análise de Dados - Quantidade de Vendas (`"/sales-quantity"`): Apresenta um gráfico de barras que exibe a quantidade total de vendas por produto.
+- Análise de Dados - Análise de Lucros(`"/profit-analysis"`): Exibe um gráfico de linhas que compara os lucros mensais de cada produto, permitindo ver em qual mês cada produto gerou mais lucro.
 
 ### Conhecendo o projeto
 
-O projeto que foi criado pode ser visto abaixo.
+O projeto criado oferece uma interface intuitiva, com recursos que facilitam a gestão dos produtos e a análise das vendas. Abaixo, estão algumas imagens ilustrativas da aplicação em funcionamento:
 
 <figure>
   <img align="center" alt="Products" src="./doc/assets/products.png" />
@@ -73,12 +76,28 @@ O projeto que foi criado pode ser visto abaixo.
   Gráfico de Linhas com os Comparativo dos Lucros para Cada Produto.</figcaption>
 </figure>
 
-### `npm start`
+### `Checkpoint`
 
-Para rodar o projeto no modo de desenvolvimento, execute o comando `npm dev`.
-Abra [http://localhost:3000](http://localhost:3000 para visualizá-lo em seu navegador.
+• [x] Painel com gráficos de vendas representando quantidade e lucro;
+• [x] Formulário para registro de produtos;
+• [ ] Possibilidade de enviar um arquivo CSV e inserir novos produtos a partir dele;
+• [x] Filtros por categoria de produto.
+
+###### `Extras:`
+
+• [ ] Permitir que o usuário edite os valores, como número de vendas e preços, para cada mês do ano;
+• [x] Inserção de novas categorias;
+• [ ] Possibilidade de baixar um arquivo CSV do banco de dados produtos/vendas.
+
+### `Rodando o Projeto Localmente`
+
+Para rodar o projeto localmente, siga os seguintes passos:
+
+1. Instale as dependência do projeto, executando o seguinte comando: `yarn install` ou `npm install`;
+2. Após, execute o comando `yarn dev` ou `npm run dev`, para rodar o servidor de desenvolvimento;
+3. Abra o link [http://localhost:5173/](http://localhost:5173/) no seu navegador para visualizar a aplicação em funcionamento.
 
 ### `deploy`
 
 O deploy da aplicação foi realizado na plataforma [Vercel](https://vercel.com/).
-E poderá ser acompanhado através do seguinte link: [Cardápio](https://projeto-cardapio-iota.vercel.app/).
+E poderá ser acompanhado através do seguinte link: [SmartMart Solutions](https://desafio-smart-mark.vercel.app/).
