@@ -84,6 +84,10 @@ const ProfitData = () => {
                                 title: "Vendas por Produto ao Longo do Ano",
                                 subtitle: "Total vendido por mês",
                             },
+                            pointsVisible: true,
+                            pointSize: 5,
+                            curveType: "function",
+                            legend: { position: "bottom" },
                         }}
                     />
                 </div>
